@@ -10,19 +10,15 @@ namespace QualaApi.Controllers
     [Route("api/[controller]")]
     public class SucursalesController : Controller
     {
-        // GET: api/values
-        [HttpGet]
-        public List<Sucursal> Get()
-        {
-            List<Sucursal> sucursales = new List<Sucursal>
+        List<Sucursal> sucursalesDB = new List<Sucursal>
             {
                 new Sucursal
                 {
-                    Codigo = 1,
-                    Descripcion = "Prueba de sebas",
-                    Direccion = "Cra 80 f # 54 a 77",
+                    Id = 1,
+                    Codigo = 42342432,
+                    Descripcion = "Normandia",
+                    Direccion = "Piso 7",
                     Identificacion = "1022399551",
-                    FechaCreacion = DateTime.Now,
                     Moneda = 1,
                     Latitud = 51.505,
                     Longitud = -0.09,
@@ -31,11 +27,11 @@ namespace QualaApi.Controllers
                 },
                  new Sucursal
                 {
-                    Codigo = 2,
-                    Descripcion = "Prueba de sebas",
-                    Direccion = "Cra 80 f # 54 a 77",
+                     Id = 2,
+                    Codigo = 23110002,
+                    Descripcion = "Chapinero",
+                    Direccion = "Carrera 63 # 54",
                     Identificacion = "1022399551",
-                    FechaCreacion = DateTime.Now,
                     Moneda = 1,
                     Latitud = 51.505,
                     Longitud = -0.08,
@@ -44,42 +40,37 @@ namespace QualaApi.Controllers
                 }
             };
 
-            return sucursales;
+        // GET: api/values
+        [HttpGet]
+        public List<Sucursal> Get()
+        {
+            return sucursalesDB;
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public List<Sucursal> Get(int id)
+        public dynamic Get(int id)
         {
-            List<Sucursal> sucursales = new List<Sucursal>
-            {
-                new Sucursal
-                {
-                Codigo = 5,
-                Descripcion = "Prueba de sebas",
-                Direccion = "Cra 80 f # 54 a 77",
-                Identificacion = "1022399551",
-                FechaCreacion = DateTime.Now,
-                Moneda = 1,
-                Latitud = 37.7749,
-                Longitud = -122.4194,
-                Horario = "8:00am a 5:00pm"
-                }
-            };
+            var item = sucursalesDB.Find(x => x.Id == id);
+            if(item == null)
+                return BadRequest("Sucursal no encontrada");
 
-            return sucursales;
+            return Ok(item);
         }
 
         [HttpPost]
         public dynamic Post(Sucursal sucursal)
         {
-
-            return null;
+            sucursalesDB.Add(sucursal);
+            return Ok();
         }
         
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]string value)
         {
+            var item = sucursalesDB.Find(x => x.Id == id);
+            if (item == null)
+                BadRequest("Sucursal no encontrada");
         }
 
         [HttpDelete("{id}")]

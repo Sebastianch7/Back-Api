@@ -1,9 +1,13 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+
 namespace QualaApi.Models
 {
 	public class Sucursal
-	{
-		public int Codigo { get; set; }
+    {
+        [Key]
+        public int Id { get; set; }
+        public int Codigo { get; set; }
 
         public string? Nombre { get; set; }
         public string? Descripcion { get; set; }
@@ -11,8 +15,6 @@ namespace QualaApi.Models
         public string? Direccion { get; set; }
 
         public string? Identificacion { get; set; }
-
-        public DateTime FechaCreacion { get; set; }
 
         public int Moneda { get; set; }
 
