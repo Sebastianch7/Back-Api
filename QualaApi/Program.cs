@@ -1,4 +1,9 @@
-﻿var builder = WebApplication.CreateBuilder(args);
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using QualaApi.Data;
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<QualaApiContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("QualaApiContext") ?? throw new InvalidOperationException("Connection string 'QualaApiContext' not found.")));
 
 // Add services to the container.
 
